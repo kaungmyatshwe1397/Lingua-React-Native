@@ -77,7 +77,7 @@
   line-height: var(--line-height-h1);
   font-family: var(--font-family-bold);
   font-weight: 700;
-  color: var(--color-neutral-text-primary);
+  color: var(--color-primary-purple);
 }
 
 /* H2 - Section Title: 24px, SemiBold, line-height 1.3 */
