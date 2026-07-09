@@ -3,3 +3,194 @@
 @import "tailwindcss/utilities.css";
 
 @import "nativewind/theme";
+
+/**
+ * Lingua Design System - Global CSS Utilities
+ *
+ * Custom utilities and design tokens for the Duolingo clone app.
+ * Based on the Lingua design system with Poppins font family.
+ */
+
+@theme {
+  /* Primary Brand Colors */
+  --color-primary-purple: #6C4EF5;
+  --color-primary-deep-purple: #5B3BF6;
+  --color-primary-blue: #4D8BFF;
+  --color-primary-green: #21C16B;
+
+  /* Semantic Colors */
+  --color-semantic-success: #21C16B;
+  --color-semantic-warning: #FFC800;
+  --color-semantic-streak: #FF8A00;
+  --color-semantic-error: #FF4D4F;
+  --color-semantic-info: #4D8BFF;
+
+  /* Neutral Colors */
+  --color-neutral-text-primary: #0D132B;
+  --color-neutral-text-secondary: #6B7280;
+  --color-neutral-border: #E5E7EB;
+  --color-neutral-surface: #F6F7FB;
+  --color-neutral-background: #FFFFFF;
+
+  /* Font Family */
+  --font-family-regular: "Poppins_400Regular";
+  --font-family-medium: "Poppins_500Medium";
+  --font-family-semibold: "Poppins_600SemiBold";
+  --font-family-bold: "Poppins_700Bold";
+
+  /* Font Sizes */
+  --font-size-h1: 32px;
+  --font-size-h2: 24px;
+  --font-size-h3: 20px;
+  --font-size-h4: 16px;
+  --font-size-body-large: 16px;
+  --font-size-body-medium: 14px;
+  --font-size-body-small: 13px;
+  --font-size-caption: 11px;
+
+  /* Line Heights */
+  --line-height-h1: 38px;
+  --line-height-h2: 31px;
+  --line-height-h3: 26px;
+  --line-height-h4: 22px;
+  --line-height-body-large: 26px;
+  --line-height-body-medium: 22px;
+  --line-height-body-small: 21px;
+  --line-height-caption: 15px;
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+}
+
+/**
+ * Typography Utilities
+ *
+ * Predefined text styles following the design system hierarchy.
+ */
+
+/* H1 - Page/Screen Title: 32px, Bold, line-height 1.2 */
+.text-h1 {
+  font-size: var(--font-size-h1);
+  line-height: var(--line-height-h1);
+  font-family: var(--font-family-bold);
+  font-weight: 700;
+  color: var(--color-neutral-text-primary);
+}
+
+/* H2 - Section Title: 24px, SemiBold, line-height 1.3 */
+.text-h2 {
+  font-size: var(--font-size-h2);
+  line-height: var(--line-height-h2);
+  font-family: var(--font-family-semibold);
+  font-weight: 600;
+  color: var(--color-neutral-text-primary);
+}
+
+/* H3 - Card/Module Title: 20px, SemiBold, line-height 1.3 */
+.text-h3 {
+  font-size: var(--font-size-h3);
+  line-height: var(--line-height-h3);
+  font-family: var(--font-family-semibold);
+  font-weight: 600;
+  color: var(--color-neutral-text-primary);
+}
+
+/* H4 - Subheading: 16px, Medium, line-height 1.4 */
+.text-h4 {
+  font-size: var(--font-size-h4);
+  line-height: var(--line-height-h4);
+  font-family: var(--font-family-medium);
+  font-weight: 500;
+  color: var(--color-neutral-text-primary);
+}
+
+/* Body Large - Important content: 16px, Regular, line-height 1.6 */
+.text-body-large {
+  font-size: var(--font-size-body-large);
+  line-height: var(--line-height-body-large);
+  font-family: var(--font-family-regular);
+  font-weight: 400;
+  color: var(--color-neutral-text-primary);
+}
+
+/* Body Medium - Body text: 14px, Regular, line-height 1.6 */
+.text-body-medium {
+  font-size: var(--font-size-body-medium);
+  line-height: var(--line-height-body-medium);
+  font-family: var(--font-family-regular);
+  font-weight: 400;
+  color: var(--color-neutral-text-primary);
+}
+
+/* Body Small - Supporting text: 13px, Regular, line-height 1.6 */
+.text-body-small {
+  font-size: var(--font-size-body-small);
+  line-height: var(--line-height-body-small);
+  font-family: var(--font-family-regular);
+  font-weight: 400;
+  color: var(--color-neutral-text-secondary);
+}
+
+/* Caption - Labels, meta text: 11px, Regular, line-height 1.4 */
+.text-caption {
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  font-family: var(--font-family-regular);
+  font-weight: 400;
+  color: var(--color-neutral-text-secondary);
+}
+
+/**
+ * Component Utilities
+ */
+
+/* Card component styles */
+.card {
+  background-color: var(--color-neutral-background);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(13, 19, 43, 0.06);
+}
+
+/* Primary button styles */
+.btn-primary {
+  background-color: var(--color-primary-purple);
+  border-radius: var(--radius-md);
+  padding: 14px 24px;
+  font-family: var(--font-family-semibold);
+  font-weight: 600;
+  color: white;
+  text-align: center;
+}
+
+/* Secondary button styles */
+.btn-secondary {
+  background-color: transparent;
+  border: 2px solid var(--color-primary-purple);
+  border-radius: var(--radius-md);
+  padding: 12px 24px;
+  font-family: var(--font-family-semibold);
+  font-weight: 600;
+  color: var(--color-primary-purple);
+  text-align: center;
+}
+
+/* Input field styles */
+.input {
+  background-color: var(--color-neutral-background);
+  border: 1px solid var(--color-neutral-border);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  font-family: var(--font-family-regular);
+  font-size: var(--font-size-body-medium);
+  color: var(--color-neutral-text-primary);
+}
+
+/* Input focus state */
+.input-focus {
+  border-color: var(--color-primary-purple);
+  box-shadow: 0 0 0 3px rgba(108, 78, 245, 0.1);
+}
