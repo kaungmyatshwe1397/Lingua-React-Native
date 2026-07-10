@@ -108,7 +108,7 @@ export default function OnboardingScreen() {
         <TouchableOpacity
           className="flex-row items-center justify-between mb-8"
           activeOpacity={0.8}
-          onPress={() => router.back()}
+          onPress={() => router.push("/(auth)/sign-up")}
           style={{
             backgroundColor: "#6C4EF5",
             borderRadius: 16,
