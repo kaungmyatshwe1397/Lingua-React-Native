@@ -9,24 +9,78 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import { useSignUp } from "@clerk/clerk-expo";
 import { images } from "@/constants/images";
 import VerificationModal from "@/components/VerificationModal";
 
 export default function SignUpScreen() {
   const router = useRouter();
+  const { isLoaded, signUp, setActive } = useSignUp();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showVerification, setShowVerification] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSignUp = () => {
-    if (email.trim()) {
+  const handleSignUp = async () => {
+    if (!isLoaded || !email.trim() || !password.trim()) return;
+
+    setLoading(true);
+    setError("");
+
+    try {
+      await signUp.create({
+        emailAddress: email.trim(),
+        password,
+      });
+
+      // Send the verification email
+      await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
       setShowVerification(true);
+    } catch (err: any) {
+      // Handle Clerk errors
+      const message =
+        err?.errors?.[0]?.message || err?.message || "Something went wrong. Please try again.";
+      setError(message);
+    } finally {
+      setLoading(false);
     }
   };
+
+  const handleVerify = async (code: string) => {
+    if (!isLoaded) throw new Error("Not ready");
+
+    try {
+      const result = await signUp.attemptEmailAddressVerification({ code });
+
+      if (result.status === "complete") {
+        await setActive({ session: result.createdSessionId });
+        router.replace("/");
+      } else {
+        throw new Error("Verification incomplete. Please try again.");
+      }
+    } catch (err: any) {
+      const message =
+        err?.errors?.[0]?.message || err?.message || "Invalid code. Please try again.";
+      throw new Error(message);
+    }
+  };
+
+  const handleResendCode = async () => {
+    if (!isLoaded) return;
+    try {
+      await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
+    } catch (err: any) {
+      console.error("Resend error:", err);
+    }
+  };
+
+  const canSubmit = loading || !email.trim() || !password.trim();
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
@@ -44,37 +98,21 @@ export default function SignUpScreen() {
             <TouchableOpacity
               activeOpacity={0.7}
               onPress={() => router.back()}
-              style={{ marginTop: 8, marginBottom: 4 }}
+              className="mt-2 mb-1"
             >
               <Ionicons name="chevron-back" size={28} color="#0D132B" />
             </TouchableOpacity>
 
             {/* Heading */}
-            <Text
-              style={{
-                fontFamily: "Poppins_700Bold",
-                fontSize: 28,
-                color: "#0D132B",
-                marginTop: 16,
-              }}
-            >
-              Create your account
-            </Text>
+            <Text className="text-h2 mt-4">Create your account</Text>
 
             {/* Subtitle */}
-            <Text
-              style={{
-                fontFamily: "Poppins_400Regular",
-                fontSize: 15,
-                color: "#6B7280",
-                marginTop: 8,
-              }}
-            >
+            <Text className="text-body-small mt-2">
               Start your language journey today ✨
             </Text>
 
             {/* Mascot illustration */}
-            <View className="items-center" style={{ marginTop: 12, marginBottom: 20 }}>
+            <View className="items-center mt-3 mb-5">
               <Image
                 source={images.mascotAuth}
                 contentFit="contain"
@@ -83,27 +121,8 @@ export default function SignUpScreen() {
             </View>
 
             {/* Email input */}
-            <View
-              style={{
-                backgroundColor: "#F9FAFB",
-                borderRadius: 12,
-                borderWidth: 1,
-                borderColor: "#E5E7EB",
-                paddingHorizontal: 16,
-                paddingVertical: 12,
-                marginBottom: 16,
-              }}
-            >
-              <Text
-                style={{
-                  fontFamily: "Poppins_400Regular",
-                  fontSize: 12,
-                  color: "#6B7280",
-                  marginBottom: 4,
-                }}
-              >
-                Email
-              </Text>
+            <View className="input-field mb-4">
+              <Text className="input-label">Email</Text>
               <TextInput
                 value={email}
                 onChangeText={setEmail}
@@ -112,52 +131,21 @@ export default function SignUpScreen() {
                 keyboardType="email-address"
                 autoCapitalize="none"
                 autoCorrect={false}
-                style={{
-                  fontFamily: "Poppins_500Medium",
-                  fontSize: 16,
-                  color: "#0D132B",
-                  padding: 0,
-                }}
+                className="input-value"
               />
             </View>
 
             {/* Password input */}
-            <View
-              style={{
-                backgroundColor: "#F9FAFB",
-                borderRadius: 12,
-                borderWidth: 1,
-                borderColor: "#E5E7EB",
-                paddingHorizontal: 16,
-                paddingVertical: 12,
-                marginBottom: 24,
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <View style={{ flex: 1 }}>
-                <Text
-                  style={{
-                    fontFamily: "Poppins_400Regular",
-                    fontSize: 12,
-                    color: "#6B7280",
-                    marginBottom: 4,
-                  }}
-                >
-                  Password
-                </Text>
+            <View className="input-field mb-6 flex-row items-center">
+              <View className="flex-1">
+                <Text className="input-label">Password</Text>
                 <TextInput
                   value={password}
                   onChangeText={setPassword}
                   placeholder="••••••••"
                   placeholderTextColor="#9CA3AF"
                   secureTextEntry={!showPassword}
-                  style={{
-                    fontFamily: "Poppins_500Medium",
-                    fontSize: 16,
-                    color: "#0D132B",
-                    padding: 0,
-                  }}
+                  className="input-value"
                 />
               </View>
               <TouchableOpacity
@@ -173,166 +161,59 @@ export default function SignUpScreen() {
               </TouchableOpacity>
             </View>
 
+            {/* Error message */}
+            {error ? <Text className="text-error mb-3">{error}</Text> : null}
+
             {/* Sign Up button */}
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={handleSignUp}
-              style={{
-                backgroundColor: "#6C4EF5",
-                borderRadius: 14,
-                paddingVertical: 18,
-                alignItems: "center",
-                marginBottom: 24,
-              }}
+              disabled={canSubmit}
+              className={`btn-cta mb-6 ${canSubmit ? "btn-cta-disabled" : ""}`}
             >
-              <Text
-                style={{
-                  fontFamily: "Poppins_600SemiBold",
-                  fontSize: 17,
-                  color: "#FFFFFF",
-                }}
-              >
-                Sign Up
-              </Text>
+              {loading ? (
+                <ActivityIndicator color="#FFFFFF" />
+              ) : (
+                <Text className="btn-cta-text">Sign Up</Text>
+              )}
             </TouchableOpacity>
 
             {/* Divider */}
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                marginBottom: 20,
-              }}
-            >
-              <View style={{ flex: 1, height: 1, backgroundColor: "#E5E7EB" }} />
-              <Text
-                style={{
-                  fontFamily: "Poppins_400Regular",
-                  fontSize: 13,
-                  color: "#6B7280",
-                  marginHorizontal: 16,
-                }}
-              >
-                or continue with
-              </Text>
-              <View style={{ flex: 1, height: 1, backgroundColor: "#E5E7EB" }} />
+            <View className="divider mb-5">
+              <View className="flex-1 h-px bg-neutral-border" />
+              <Text className="text-body-small mx-4">or continue with</Text>
+              <View className="flex-1 h-px bg-neutral-border" />
             </View>
 
             {/* Social auth buttons */}
             {/* Google */}
-            <TouchableOpacity
-              activeOpacity={0.8}
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#FFFFFF",
-                borderRadius: 12,
-                borderWidth: 1,
-                borderColor: "#E5E7EB",
-                paddingVertical: 15,
-                marginBottom: 12,
-              }}
-            >
+            <TouchableOpacity activeOpacity={0.8} className="social-btn mb-3">
               <Ionicons name="logo-google" size={20} color="#DB4437" />
-              <Text
-                style={{
-                  fontFamily: "Poppins_500Medium",
-                  fontSize: 15,
-                  color: "#0D132B",
-                  marginLeft: 12,
-                }}
-              >
-                Continue with Google
-              </Text>
+              <Text className="social-btn-text">Continue with Google</Text>
             </TouchableOpacity>
 
             {/* Facebook */}
-            <TouchableOpacity
-              activeOpacity={0.8}
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#FFFFFF",
-                borderRadius: 12,
-                borderWidth: 1,
-                borderColor: "#E5E7EB",
-                paddingVertical: 15,
-                marginBottom: 12,
-              }}
-            >
+            <TouchableOpacity activeOpacity={0.8} className="social-btn mb-3">
               <Ionicons name="logo-facebook" size={22} color="#1877F2" />
-              <Text
-                style={{
-                  fontFamily: "Poppins_500Medium",
-                  fontSize: 15,
-                  color: "#0D132B",
-                  marginLeft: 12,
-                }}
-              >
-                Continue with Facebook
-              </Text>
+              <Text className="social-btn-text">Continue with Facebook</Text>
             </TouchableOpacity>
 
             {/* Apple */}
-            <TouchableOpacity
-              activeOpacity={0.8}
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#FFFFFF",
-                borderRadius: 12,
-                borderWidth: 1,
-                borderColor: "#E5E7EB",
-                paddingVertical: 15,
-                marginBottom: 24,
-              }}
-            >
+            <TouchableOpacity activeOpacity={0.8} className="social-btn mb-6">
               <Ionicons name="logo-apple" size={24} color="#0D132B" />
-              <Text
-                style={{
-                  fontFamily: "Poppins_500Medium",
-                  fontSize: 15,
-                  color: "#0D132B",
-                  marginLeft: 12,
-                }}
-              >
-                Continue with Apple
-              </Text>
+              <Text className="social-btn-text">Continue with Apple</Text>
             </TouchableOpacity>
 
             {/* Already have account */}
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                paddingBottom: 24,
-              }}
-            >
-              <Text
-                style={{
-                  fontFamily: "Poppins_400Regular",
-                  fontSize: 14,
-                  color: "#6B7280",
-                }}
-              >
+            <View className="flex-row justify-center pb-6">
+              <Text className="text-secondary">
                 Already have an account?{" "}
               </Text>
               <TouchableOpacity
                 activeOpacity={0.7}
-                onPress={() => router.push("/(auth)/sign-in")}
+                onPress={() => router.push("/sign-in")}
               >
-                <Text
-                  style={{
-                    fontFamily: "Poppins_600SemiBold",
-                    fontSize: 14,
-                    color: "#6C4EF5",
-                  }}
-                >
-                  Log in
-                </Text>
+                <Text className="link-text">Log in</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -344,6 +225,8 @@ export default function SignUpScreen() {
         visible={showVerification}
         onClose={() => setShowVerification(false)}
         email={email}
+        onVerify={handleVerify}
+        onResend={handleResendCode}
       />
     </SafeAreaView>
   );
