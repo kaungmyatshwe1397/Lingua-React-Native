@@ -18,23 +18,23 @@ export default function OnboardingScreen() {
             contentFit="contain"
             style={{ width: 48, height: 48 }}
           />
-          <Text className="ml-2 text-neutral-text-primary" style={{ fontFamily: "Poppins_700Bold", fontSize: 22 }}>
+          <Text className="ml-2 font-bold text-xl text-neutral-text-primary">
             Vibe-Linguo
           </Text>
         </View>
 
         {/* Heading */}
         <View className="mt-8">
-          <Text className="text-neutral-text-primary" style={{ fontFamily: "Poppins_700Bold", fontSize: 30, lineHeight: 38 }}>
+          <Text className="font-bold text-[30px] leading-[38px] text-neutral-text-primary">
             Your AI language
           </Text>
-          <Text className="text-primary-purple" style={{ fontFamily: "Poppins_700Bold", fontSize: 30, lineHeight: 38 }}>
+          <Text className="font-bold text-[30px] leading-[38px] text-primary-purple">
             teacher.
           </Text>
         </View>
 
         {/* Subtitle */}
-        <Text className="text-body-large mt-3" style={{ color: "#6B7280" }}>
+        <Text className="text-body-large mt-3 text-neutral-text-secondary">
           Real conversations, personalized lessons, anytime, anywhere.
         </Text>
 
@@ -55,7 +55,7 @@ export default function OnboardingScreen() {
                 zIndex: 1,
               }}
             >
-              <Text style={{ fontFamily: "Poppins_500Medium", fontSize: 14, color: "#0D132B" }}>
+              <Text className="text-sm font-medium text-neutral-text-primary">
                 Hello!
               </Text>
             </View>
@@ -73,7 +73,7 @@ export default function OnboardingScreen() {
                 zIndex: 1,
               }}
             >
-              <Text style={{ fontFamily: "Poppins_500Medium", fontSize: 14, color: "#6C4EF5" }}>
+              <Text className="text-sm font-medium text-primary-purple">
                 ¡Hola!
               </Text>
             </View>
@@ -90,7 +90,7 @@ export default function OnboardingScreen() {
                 zIndex: 1,
               }}
             >
-              <Text style={{ fontFamily: "Poppins_500Medium", fontSize: 14, color: "#FF4D4F" }}>
+              <Text className="text-sm font-medium text-semantic-error">
                 你好!
               </Text>
             </View>
@@ -106,17 +106,11 @@ export default function OnboardingScreen() {
 
         {/* Get Started button */}
         <TouchableOpacity
-          className="flex-row items-center justify-between mb-8"
+          className="flex-row items-center justify-between mb-8 bg-primary-purple rounded-lg py-4 px-6"
           activeOpacity={0.8}
-          onPress={() => router.push("/(auth)/sign-up")}
-          style={{
-            backgroundColor: "#6C4EF5",
-            borderRadius: 16,
-            paddingVertical: 18,
-            paddingHorizontal: 24,
-          }}
+          onPress={() => router.push("/sign-up")}
         >
-          <Text style={{ fontFamily: "Poppins_600SemiBold", fontSize: 17, color: "#FFFFFF" }}>
+          <Text className="font-semibold text-lg text-white">
             Get Started
           </Text>
           <Ionicons name="chevron-forward" size={22} color="#FFFFFF" />

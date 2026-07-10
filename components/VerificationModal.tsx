@@ -8,14 +8,16 @@ import {
   KeyboardAvoidingView,
   Platform,
   NativeSyntheticEvent,
+  ActivityIndicator,
 } from "react-native";
-import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 
 interface VerificationModalProps {
   visible: boolean;
   onClose: () => void;
   email: string;
+  onVerify?: (code: string) => Promise<void>;
+  onResend?: () => Promise<void>;
 }
 
 const CODE_LENGTH = 6;
@@ -24,15 +26,20 @@ export default function VerificationModal({
   visible,
   onClose,
   email,
+  onVerify,
+  onResend,
 }: VerificationModalProps) {
-  const router = useRouter();
   const [code, setCode] = useState<string[]>(Array(CODE_LENGTH).fill(""));
+  const [error, setError] = useState("");
+  const [verifying, setVerifying] = useState(false);
   const inputRefs = useRef<(TextInput | null)[]>([]);
 
   // Reset code when modal opens
   useEffect(() => {
     if (visible) {
       setCode(Array(CODE_LENGTH).fill(""));
+      setError("");
+      setVerifying(false);
       // Focus first input after a short delay
       setTimeout(() => {
         inputRefs.current[0]?.focus();
@@ -40,18 +47,23 @@ export default function VerificationModal({
     }
   }, [visible]);
 
-  // Auto-navigate when all digits are entered
-  useEffect(() => {
-    const fullCode = code.join("");
-    if (fullCode.length === CODE_LENGTH && code.every((d) => d !== "")) {
-      // Small delay to show the completed state before navigating
-      const timer = setTimeout(() => {
-        onClose();
-        router.replace("/");
-      }, 400);
-      return () => clearTimeout(timer);
+  const verifyCode = async (fullCode: string) => {
+    if (!onVerify) return;
+    setVerifying(true);
+    setError("");
+    try {
+      await onVerify(fullCode);
+      onClose();
+    } catch (err: any) {
+      setError(err?.message || "Verification failed. Please try again.");
+      setCode(Array(CODE_LENGTH).fill(""));
+      setTimeout(() => {
+        inputRefs.current[0]?.focus();
+      }, 100);
+    } finally {
+      setVerifying(false);
     }
-  }, [code, onClose, router]);
+  };
 
   const handleChange = (text: string, index: number) => {
     // Only allow digits
@@ -60,10 +72,17 @@ export default function VerificationModal({
     const newCode = [...code];
     newCode[index] = digit;
     setCode(newCode);
+    setError("");
 
     // Auto-advance to next input
     if (digit && index < CODE_LENGTH - 1) {
       inputRefs.current[index + 1]?.focus();
+    }
+
+    // Auto-submit when all digits are entered
+    if (newCode.every((d) => d !== "")) {
+      const fullCode = newCode.join("");
+      verifyCode(fullCode);
     }
   };
 
@@ -80,6 +99,12 @@ export default function VerificationModal({
     }
   };
 
+  const handleResend = async () => {
+    if (onResend) {
+      await onResend();
+    }
+  };
+
   return (
     <Modal
       visible={visible}
@@ -91,90 +116,38 @@ export default function VerificationModal({
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
       >
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "flex-end",
-            backgroundColor: "rgba(0, 0, 0, 0.4)",
-          }}
-        >
+        <View className="flex-1 justify-end bg-black/40">
           <View
+            className="bg-neutral-background px-6 pt-8"
             style={{
-              backgroundColor: "#FFFFFF",
               borderTopLeftRadius: 24,
               borderTopRightRadius: 24,
-              paddingHorizontal: 24,
-              paddingTop: 32,
               paddingBottom: Platform.OS === "ios" ? 40 : 24,
             }}
           >
             {/* Handle bar */}
-            <View
-              style={{
-                width: 40,
-                height: 4,
-                backgroundColor: "#E5E7EB",
-                borderRadius: 2,
-                alignSelf: "center",
-                marginBottom: 24,
-              }}
-            />
+            <View className="w-10 h-1 bg-neutral-border rounded self-center mb-6" />
 
             {/* Icon */}
-            <View
-              style={{
-                width: 64,
-                height: 64,
-                borderRadius: 32,
-                backgroundColor: "#EDE9FE",
-                alignItems: "center",
-                justifyContent: "center",
-                alignSelf: "center",
-                marginBottom: 20,
-              }}
-            >
+            <View className="w-16 h-16 rounded-full bg-[#EDE9FE] items-center justify-center self-center mb-5">
               <Ionicons name="mail-outline" size={32} color="#6C4EF5" />
             </View>
 
             {/* Title */}
-            <Text
-              style={{
-                fontFamily: "Poppins_700Bold",
-                fontSize: 22,
-                color: "#0D132B",
-                textAlign: "center",
-                marginBottom: 8,
-              }}
-            >
+            <Text className="text-h3 text-center mb-2">
               Check your email
             </Text>
 
             {/* Subtitle */}
-            <Text
-              style={{
-                fontFamily: "Poppins_400Regular",
-                fontSize: 14,
-                color: "#6B7280",
-                textAlign: "center",
-                marginBottom: 28,
-                lineHeight: 22,
-              }}
-            >
+            <Text className="text-secondary text-center mb-7 leading-[22px]">
               We sent a 6-digit verification code to{"\n"}
-              <Text style={{ fontFamily: "Poppins_600SemiBold", color: "#0D132B" }}>
+              <Text className="font-semibold text-neutral-text-primary">
                 {email}
               </Text>
             </Text>
 
             {/* Code inputs */}
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                gap: 10,
-                marginBottom: 28,
-              }}
-            >
+            <View className="flex-row justify-center gap-2.5 mb-2">
               {Array.from({ length: CODE_LENGTH }).map((_, index) => (
                 <TextInput
                   key={index}
@@ -203,20 +176,28 @@ export default function VerificationModal({
               ))}
             </View>
 
+            {/* Error message */}
+            {error ? (
+              <Text className="text-error mt-2 mb-3">{error}</Text>
+            ) : null}
+
+            {/* Verifying indicator */}
+            {verifying ? (
+              <View className="flex-row items-center justify-center mb-4 mt-2">
+                <ActivityIndicator size="small" color="#6C4EF5" />
+                <Text className="text-body-small ml-2">Verifying...</Text>
+              </View>
+            ) : null}
+
             {/* Resend link */}
             <TouchableOpacity
               activeOpacity={0.7}
-              style={{ alignSelf: "center", marginBottom: 24 }}
+              className="self-center mb-6"
+              onPress={handleResend}
             >
-              <Text
-                style={{
-                  fontFamily: "Poppins_400Regular",
-                  fontSize: 14,
-                  color: "#6B7280",
-                }}
-              >
+              <Text className="text-secondary">
                 Didn{"'"}t receive the code?{" "}
-                <Text style={{ fontFamily: "Poppins_600SemiBold", color: "#6C4EF5" }}>
+                <Text className="font-semibold text-primary-purple">
                   Resend
                 </Text>
               </Text>
@@ -226,20 +207,11 @@ export default function VerificationModal({
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={onClose}
-              style={{
-                backgroundColor: "#F6F7FB",
-                borderRadius: 12,
-                paddingVertical: 14,
-                alignItems: "center",
-              }}
+              disabled={verifying}
+              className="bg-neutral-surface rounded-md py-3.5 items-center"
+              style={{ opacity: verifying ? 0.5 : 1 }}
             >
-              <Text
-                style={{
-                  fontFamily: "Poppins_600SemiBold",
-                  fontSize: 15,
-                  color: "#6B7280",
-                }}
-              >
+              <Text className="font-semibold text-neutral-text-secondary">
                 Cancel
               </Text>
             </TouchableOpacity>

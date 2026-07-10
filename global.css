@@ -194,3 +194,94 @@
   border-color: var(--color-primary-purple);
   box-shadow: 0 0 0 3px rgba(108, 78, 245, 0.1);
 }
+
+/* Input container — the wrapped box with label + text input */
+.input-field {
+  background-color: var(--color-neutral-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-neutral-border);
+  padding: 12px 16px;
+}
+
+/* Input label — small label inside input-field */
+.input-label {
+  font-family: var(--font-family-regular);
+  font-size: 12px;
+  color: var(--color-neutral-text-secondary);
+  margin-bottom: 4px;
+}
+
+/* Input value — the actual text inside input-field */
+.input-value {
+  font-family: var(--font-family-medium);
+  font-size: 16px;
+  color: var(--color-neutral-text-primary);
+  padding: 0;
+}
+
+/* Social auth button — outlined row button for Google/Facebook/Apple */
+.social-btn {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-neutral-background);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-neutral-border);
+  padding: 15px;
+}
+
+/* Social button label text */
+.social-btn-text {
+  font-family: var(--font-family-medium);
+  font-size: 15px;
+  color: var(--color-neutral-text-primary);
+  margin-left: 12px;
+}
+
+/* Primary CTA button — full-width purple */
+.btn-cta {
+  background-color: var(--color-primary-purple);
+  border-radius: 14px;
+  padding: 18px;
+  align-items: center;
+}
+
+/* Primary CTA button text */
+.btn-cta-text {
+  font-family: var(--font-family-semibold);
+  font-size: 17px;
+  color: white;
+}
+
+/* Disabled state for CTA */
+.btn-cta-disabled {
+  background-color: #a78bfa;
+}
+
+/* Error text */
+.text-error {
+  font-family: var(--font-family-regular);
+  font-size: 13px;
+  color: var(--color-semantic-error);
+  text-align: center;
+}
+
+/* Divider with "or continue with" text */
+.divider {
+  flex-direction: row;
+  align-items: center;
+}
+
+/* Link text (purple, semibold) */
+.link-text {
+  font-family: var(--font-family-semibold);
+  font-size: 14px;
+  color: var(--color-primary-purple);
+}
+
+/* Secondary text (gray, regular) */
+.text-secondary {
+  font-family: var(--font-family-regular);
+  font-size: 14px;
+  color: var(--color-neutral-text-secondary);
+}

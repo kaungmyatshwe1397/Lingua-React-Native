@@ -9,22 +9,50 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import { useSignIn } from "@clerk/clerk-expo";
 import { images } from "@/constants/images";
-import VerificationModal from "@/components/VerificationModal";
 
 export default function SignInScreen() {
   const router = useRouter();
+  const { isLoaded, signIn,setActive } = useSignIn();
   const [email, setEmail] = useState("");
-  const [showVerification, setShowVerification] = useState(false);
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSignIn = () => {
-    if (email.trim()) {
-      setShowVerification(true);
+  const handleSignIn = async () => {
+    if (!isLoaded || !email.trim() || !password.trim()) return;
+
+    setLoading(true);
+    setError("");
+
+    try {
+      const result = await signIn.create({
+        identifier: email.trim(),
+        password,
+      });
+
+      if (result.status === "complete") {
+        await setActive({ session: result.createdSessionId });
+        router.replace("/");
+      } else {
+        setError("Sign in incomplete. Please try again.");
+      }
+    } catch (err: any) {
+      const message =
+        err?.errors?.[0]?.message || err?.message || "Invalid email or password. Please try again.";
+      setError(message);
+    } finally {
+      setLoading(false);
     }
   };
+
+  const canSubmit = loading || !email.trim() || !password.trim();
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
@@ -42,37 +70,21 @@ export default function SignInScreen() {
             <TouchableOpacity
               activeOpacity={0.7}
               onPress={() => router.back()}
-              style={{ marginTop: 8, marginBottom: 4 }}
+              className="mt-2 mb-1"
             >
               <Ionicons name="chevron-back" size={28} color="#0D132B" />
             </TouchableOpacity>
 
             {/* Heading */}
-            <Text
-              style={{
-                fontFamily: "Poppins_700Bold",
-                fontSize: 28,
-                color: "#0D132B",
-                marginTop: 16,
-              }}
-            >
-              Welcome back!
-            </Text>
+            <Text className="text-h2 mt-4">Welcome back!</Text>
 
             {/* Subtitle */}
-            <Text
-              style={{
-                fontFamily: "Poppins_400Regular",
-                fontSize: 15,
-                color: "#6B7280",
-                marginTop: 8,
-              }}
-            >
+            <Text className="text-body-small mt-2">
               Sign in to continue learning ✨
             </Text>
 
             {/* Mascot illustration */}
-            <View className="items-center" style={{ marginTop: 12, marginBottom: 24 }}>
+            <View className="items-center mt-3 mb-6">
               <Image
                 source={images.mascotAuth}
                 contentFit="contain"
@@ -81,27 +93,8 @@ export default function SignInScreen() {
             </View>
 
             {/* Email input */}
-            <View
-              style={{
-                backgroundColor: "#F9FAFB",
-                borderRadius: 12,
-                borderWidth: 1,
-                borderColor: "#E5E7EB",
-                paddingHorizontal: 16,
-                paddingVertical: 12,
-                marginBottom: 24,
-              }}
-            >
-              <Text
-                style={{
-                  fontFamily: "Poppins_400Regular",
-                  fontSize: 12,
-                  color: "#6B7280",
-                  marginBottom: 4,
-                }}
-              >
-                Email
-              </Text>
+            <View className="input-field mb-4">
+              <Text className="input-label">Email</Text>
               <TextInput
                 value={email}
                 onChangeText={setEmail}
@@ -110,187 +103,94 @@ export default function SignInScreen() {
                 keyboardType="email-address"
                 autoCapitalize="none"
                 autoCorrect={false}
-                style={{
-                  fontFamily: "Poppins_500Medium",
-                  fontSize: 16,
-                  color: "#0D132B",
-                  padding: 0,
-                }}
+                className="input-value"
               />
             </View>
+
+            {/* Password input */}
+            <View className="input-field mb-6 flex-row items-center">
+              <View className="flex-1">
+                <Text className="input-label">Password</Text>
+                <TextInput
+                  value={password}
+                  onChangeText={setPassword}
+                  placeholder="••••••••"
+                  placeholderTextColor="#9CA3AF"
+                  secureTextEntry={!showPassword}
+                  className="input-value"
+                />
+              </View>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => setShowPassword(!showPassword)}
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+              >
+                <Ionicons
+                  name={showPassword ? "eye-outline" : "eye-off-outline"}
+                  size={22}
+                  color="#9CA3AF"
+                />
+              </TouchableOpacity>
+            </View>
+
+            {/* Error message */}
+            {error ? <Text className="text-error mb-3">{error}</Text> : null}
 
             {/* Sign In button */}
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={handleSignIn}
-              style={{
-                backgroundColor: "#6C4EF5",
-                borderRadius: 14,
-                paddingVertical: 18,
-                alignItems: "center",
-                marginBottom: 24,
-              }}
+              disabled={canSubmit}
+              className={`btn-cta mb-6 ${canSubmit ? "btn-cta-disabled" : ""}`}
             >
-              <Text
-                style={{
-                  fontFamily: "Poppins_600SemiBold",
-                  fontSize: 17,
-                  color: "#FFFFFF",
-                }}
-              >
-                Sign In
-              </Text>
+              {loading ? (
+                <ActivityIndicator color="#FFFFFF" />
+              ) : (
+                <Text className="btn-cta-text">Sign In</Text>
+              )}
             </TouchableOpacity>
 
             {/* Divider */}
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                marginBottom: 20,
-              }}
-            >
-              <View style={{ flex: 1, height: 1, backgroundColor: "#E5E7EB" }} />
-              <Text
-                style={{
-                  fontFamily: "Poppins_400Regular",
-                  fontSize: 13,
-                  color: "#6B7280",
-                  marginHorizontal: 16,
-                }}
-              >
-                or continue with
-              </Text>
-              <View style={{ flex: 1, height: 1, backgroundColor: "#E5E7EB" }} />
+            <View className="divider mb-5">
+              <View className="flex-1 h-px bg-neutral-border" />
+              <Text className="text-body-small mx-4">or continue with</Text>
+              <View className="flex-1 h-px bg-neutral-border" />
             </View>
 
             {/* Social auth buttons */}
             {/* Google */}
-            <TouchableOpacity
-              activeOpacity={0.8}
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#FFFFFF",
-                borderRadius: 12,
-                borderWidth: 1,
-                borderColor: "#E5E7EB",
-                paddingVertical: 15,
-                marginBottom: 12,
-              }}
-            >
+            <TouchableOpacity activeOpacity={0.8} className="social-btn mb-3">
               <Ionicons name="logo-google" size={20} color="#DB4437" />
-              <Text
-                style={{
-                  fontFamily: "Poppins_500Medium",
-                  fontSize: 15,
-                  color: "#0D132B",
-                  marginLeft: 12,
-                }}
-              >
-                Continue with Google
-              </Text>
+              <Text className="social-btn-text">Continue with Google</Text>
             </TouchableOpacity>
 
             {/* Facebook */}
-            <TouchableOpacity
-              activeOpacity={0.8}
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#FFFFFF",
-                borderRadius: 12,
-                borderWidth: 1,
-                borderColor: "#E5E7EB",
-                paddingVertical: 15,
-                marginBottom: 12,
-              }}
-            >
+            <TouchableOpacity activeOpacity={0.8} className="social-btn mb-3">
               <Ionicons name="logo-facebook" size={22} color="#1877F2" />
-              <Text
-                style={{
-                  fontFamily: "Poppins_500Medium",
-                  fontSize: 15,
-                  color: "#0D132B",
-                  marginLeft: 12,
-                }}
-              >
-                Continue with Facebook
-              </Text>
+              <Text className="social-btn-text">Continue with Facebook</Text>
             </TouchableOpacity>
 
             {/* Apple */}
-            <TouchableOpacity
-              activeOpacity={0.8}
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#FFFFFF",
-                borderRadius: 12,
-                borderWidth: 1,
-                borderColor: "#E5E7EB",
-                paddingVertical: 15,
-                marginBottom: 24,
-              }}
-            >
+            <TouchableOpacity activeOpacity={0.8} className="social-btn mb-6">
               <Ionicons name="logo-apple" size={24} color="#0D132B" />
-              <Text
-                style={{
-                  fontFamily: "Poppins_500Medium",
-                  fontSize: 15,
-                  color: "#0D132B",
-                  marginLeft: 12,
-                }}
-              >
-                Continue with Apple
-              </Text>
+              <Text className="social-btn-text">Continue with Apple</Text>
             </TouchableOpacity>
 
             {/* Don't have account */}
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                paddingBottom: 24,
-              }}
-            >
-              <Text
-                style={{
-                  fontFamily: "Poppins_400Regular",
-                  fontSize: 14,
-                  color: "#6B7280",
-                }}
-              >
+            <View className="flex-row justify-center pb-6">
+              <Text className="text-secondary">
                 Don{"'"}t have an account?{" "}
               </Text>
               <TouchableOpacity
                 activeOpacity={0.7}
-                onPress={() => router.push("/(auth)/sign-up")}
+                onPress={() => router.push("/sign-up")}
               >
-                <Text
-                  style={{
-                    fontFamily: "Poppins_600SemiBold",
-                    fontSize: 14,
-                    color: "#6C4EF5",
-                  }}
-                >
-                  Sign up
-                </Text>
+                <Text className="link-text">Sign up</Text>
               </TouchableOpacity>
             </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-
-      {/* Verification Modal */}
-      <VerificationModal
-        visible={showVerification}
-        onClose={() => setShowVerification(false)}
-        email={email}
-      />
     </SafeAreaView>
   );
 }
