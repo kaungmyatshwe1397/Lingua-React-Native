@@ -45,6 +45,10 @@ export default function RootLayout() {
           name="languages"
           options={{ headerShown: false, animation: "slide_from_right" }}
         />
+        <Stack.Screen
+          name="(tabs)"
+          options={{ headerShown: false }}
+        />
       </Stack>
     </ClerkProvider>
   );

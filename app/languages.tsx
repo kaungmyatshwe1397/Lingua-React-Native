@@ -12,6 +12,7 @@ import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 
 import { images } from "@/constants/images";
+import { colors } from "@/constants/theme";
 import { languages } from "@/data/languages";
 import { useLanguageStore } from "@/store/useLanguageStore";
 import type { Language } from "@/types/learning";
@@ -41,7 +42,7 @@ export default function LanguageSelectionScreen() {
         <Ionicons
           name="flame-outline"
           size={22}
-          color="#0D132B"
+          color={colors.neutral.textPrimary}
           style={{ marginRight: 8 }}
         />
         <Text className="text-h3">Popular</Text>
@@ -74,16 +75,16 @@ export default function LanguageSelectionScreen() {
           </Text>
         </View>
         {isSelected ? (
-          <Ionicons name="checkmark-circle" size={26} color="#6C4EF5" />
+          <Ionicons name="checkmark-circle" size={26} color={colors.primary.purple} />
         ) : (
-          <Ionicons name="chevron-forward" size={20} color="#9CA3AF" />
+          <Ionicons name="chevron-forward" size={20} color={colors.neutral.placeholder} />
         )}
       </TouchableOpacity>
     );
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.neutral.background }}>
       <View className="flex-1 bg-white px-5 pt-2">
         {/* Header */}
         <View className="flex-row items-center mb-4">
@@ -91,7 +92,7 @@ export default function LanguageSelectionScreen() {
             activeOpacity={0.7}
             onPress={() => router.back()}
           >
-            <Ionicons name="chevron-back" size={28} color="#0D132B" />
+            <Ionicons name="chevron-back" size={28} color={colors.neutral.textPrimary} />
           </TouchableOpacity>
           <View className="flex-1 items-center mr-7">
             <Image
@@ -113,18 +114,18 @@ export default function LanguageSelectionScreen() {
             <Ionicons
               name="search"
               size={18}
-              color="#6B7280"
+              color={colors.neutral.textSecondary}
               style={{ marginRight: 10 }}
             />
             <TextInput
               value={query}
               onChangeText={setQuery}
               placeholder="Search languages"
-              placeholderTextColor="#9CA3AF"
+              placeholderTextColor={colors.neutral.placeholder}
               style={{
                 flex: 1,
                 fontSize: 15,
-                color: "#0D132B",
+                color: colors.neutral.textPrimary,
                 padding: 0,
               }}
             />
@@ -145,7 +146,7 @@ export default function LanguageSelectionScreen() {
         {/* Confirm button */}
         <TouchableOpacity
           activeOpacity={0.8}
-          onPress={() => router.back()}
+          onPress={() => router.replace("/")}
           disabled={!selectedLanguageCode}
           className={`btn-cta mb-4 ${
             selectedLanguageCode ? "" : "btn-cta-disabled"

@@ -50,6 +50,54 @@ export const colors = {
     surface: "#F6F7FB",
     /** Background color - main screen background */
     background: "#FFFFFF",
+    /** Placeholder text color - input placeholders, muted icons */
+    placeholder: "#9CA3AF",
+    /** Disabled state color - disabled CTA buttons */
+    disabled: "#a78bfa",
+  },
+
+  /**
+   * Tint Colors - Light background tints for bubbles, inputs, badges
+   */
+  tint: {
+    /** Gray-blue tint - onboarding "Hello!" bubble */
+    grayBlue: "#F0F0F5",
+    /** Light purple tint - onboarding "Hola!" bubble, verification icon */
+    purple: "#EDE9FE",
+    /** Light pink tint - onboarding "你好!" bubble */
+    pink: "#FFF0F0",
+    /** Very light purple - verification input filled state */
+    lightPurple: "#F5F3FF",
+    /** Off-white - verification input empty state */
+    offWhite: "#F9FAFB",
+  },
+
+  /**
+   * Brand Colors - Third-party brand identifiers
+   */
+  brand: {
+    /** Google logo color */
+    google: "#191818",
+    /** Facebook brand color */
+    facebook: "#1877F2",
+  },
+
+  /**
+   * Unit Colors - Palette for unit card theming
+   */
+  unit: {
+    /** Pink - used for Greetings units */
+    pink: "#FF4B6E",
+    /** Orange - used for Numbers units */
+    orange: "#FF8B00",
+    /** Blue - used for Greetings/Numbers units */
+    blue: "#1CB0F6",
+    /** Purple - used for Numbers units */
+    purple: "#CE82FF",
+    /** Amber - used for Greetings/Colors units */
+    amber: "#FF9600",
+    /** Cobalt - used for Colors units */
+    cobalt: "#2B70C9",
   },
 } as const;
 
@@ -60,3 +108,6 @@ export type ColorToken = typeof colors;
 export type PrimaryColor = keyof typeof colors.primary;
 export type SemanticColor = keyof typeof colors.semantic;
 export type NeutralColor = keyof typeof colors.neutral;
+export type TintColor = keyof typeof colors.tint;
+export type BrandColor = keyof typeof colors.brand;
+export type UnitColor = keyof typeof colors.unit;

@@ -2,9 +2,9 @@
 
 export type LanguageCode =
   | "en"
-  | "jp"
-  | "kr"
-  | "cn"
+  | "ja"
+  | "ko"
+  | "zh"
   | "es"
   | "fr"
   | "de"

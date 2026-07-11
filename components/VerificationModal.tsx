@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { colors } from "@/constants/theme";
 
 interface VerificationModalProps {
   visible: boolean;
@@ -129,8 +130,8 @@ export default function VerificationModal({
             <View className="w-10 h-1 bg-neutral-border rounded self-center mb-6" />
 
             {/* Icon */}
-            <View className="w-16 h-16 rounded-full bg-[#EDE9FE] items-center justify-center self-center mb-5">
-              <Ionicons name="mail-outline" size={32} color="#6C4EF5" />
+            <View className="w-16 h-16 rounded-full bg-tint-purple items-center justify-center self-center mb-5">
+              <Ionicons name="mail-outline" size={32} color={colors.primary.purple} />
             </View>
 
             {/* Title */}
@@ -165,12 +166,12 @@ export default function VerificationModal({
                     height: 56,
                     borderRadius: 12,
                     borderWidth: 2,
-                    borderColor: code[index] ? "#6C4EF5" : "#E5E7EB",
-                    backgroundColor: code[index] ? "#F5F3FF" : "#F9FAFB",
+                    borderColor: code[index] ? colors.primary.purple : colors.neutral.border,
+                    backgroundColor: code[index] ? colors.tint.lightPurple : colors.tint.offWhite,
                     textAlign: "center",
                     fontFamily: "Poppins_600SemiBold",
                     fontSize: 22,
-                    color: "#0D132B",
+                    color: colors.neutral.textPrimary,
                   }}
                 />
               ))}
@@ -184,7 +185,7 @@ export default function VerificationModal({
             {/* Verifying indicator */}
             {verifying ? (
               <View className="flex-row items-center justify-center mb-4 mt-2">
-                <ActivityIndicator size="small" color="#6C4EF5" />
+                <ActivityIndicator size="small" color={colors.primary.purple} />
                 <Text className="text-body-small ml-2">Verifying...</Text>
               </View>
             ) : null}

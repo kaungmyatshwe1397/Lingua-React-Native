@@ -1,4 +1,5 @@
 import { Unit } from "@/types/learning";
+import { colors } from "@/constants/theme";
 
 export const units: Unit[] = [
   // ─── Japanese ──────────────────────────────────────────────
@@ -8,7 +9,7 @@ export const units: Unit[] = [
     order: 1,
     title: "Greetings",
     description: "Learn basic Japanese greetings and introductions",
-    color: "#FF4B6E",
+    color: colors.unit.pink,
     lessonIds: ["ja-lesson-1", "ja-lesson-2"],
   },
   {
@@ -17,7 +18,7 @@ export const units: Unit[] = [
     order: 2,
     title: "Numbers & Counting",
     description: "Count from 1 to 10 and use numbers in daily life",
-    color: "#FF8B00",
+    color: colors.unit.orange,
     lessonIds: ["ja-lesson-3"],
   },
 
@@ -28,7 +29,7 @@ export const units: Unit[] = [
     order: 1,
     title: "Greetings",
     description: "Learn basic Korean greetings and polite expressions",
-    color: "#1CB0F6",
+    color: colors.unit.blue,
     lessonIds: ["ko-lesson-1"],
   },
   {
@@ -37,7 +38,7 @@ export const units: Unit[] = [
     order: 2,
     title: "Numbers & Counting",
     description: "Learn the native Korean number system",
-    color: "#CE82FF",
+    color: colors.unit.purple,
     lessonIds: ["ko-lesson-2"],
   },
 
@@ -48,7 +49,7 @@ export const units: Unit[] = [
     order: 1,
     title: "Greetings",
     description: "Say hello and introduce yourself in Spanish",
-    color: "#FF9600",
+    color: colors.unit.amber,
     lessonIds: ["es-lesson-1"],
   },
   {
@@ -57,7 +58,7 @@ export const units: Unit[] = [
     order: 2,
     title: "Colors",
     description: "Learn the colors in Spanish",
-    color: "#2B70C9",
+    color: colors.unit.cobalt,
     lessonIds: ["es-lesson-2"],
   },
 
@@ -68,7 +69,7 @@ export const units: Unit[] = [
     order: 1,
     title: "Greetings",
     description: "Learn basic French greetings",
-    color: "#FF4B6E",
+    color: colors.unit.pink,
     lessonIds: ["fr-lesson-1"],
   },
   {
@@ -77,7 +78,7 @@ export const units: Unit[] = [
     order: 2,
     title: "Numbers & Counting",
     description: "Count from 1 to 10 in French",
-    color: "#CE82FF",
+    color: colors.unit.purple,
     lessonIds: ["fr-lesson-2"],
   },
 
@@ -88,7 +89,7 @@ export const units: Unit[] = [
     order: 1,
     title: "Greetings",
     description: "Learn basic Mandarin greetings",
-    color: "#FF4B6E",
+    color: colors.unit.pink,
     lessonIds: ["zh-lesson-1"],
   },
   {
@@ -97,7 +98,7 @@ export const units: Unit[] = [
     order: 2,
     title: "Numbers & Counting",
     description: "Count from 1 to 10 in Mandarin",
-    color: "#FF9600",
+    color: colors.unit.amber,
     lessonIds: ["zh-lesson-2"],
   },
 
@@ -108,7 +109,7 @@ export const units: Unit[] = [
     order: 1,
     title: "Greetings",
     description: "Learn basic German greetings and introductions",
-    color: "#FF9600",
+    color: colors.unit.amber,
     lessonIds: ["de-lesson-1"],
   },
   {
@@ -117,7 +118,7 @@ export const units: Unit[] = [
     order: 2,
     title: "Numbers & Counting",
     description: "Count from 1 to 10 in German",
-    color: "#1CB0F6",
+    color: colors.unit.blue,
     lessonIds: ["de-lesson-2"],
   },
 ];

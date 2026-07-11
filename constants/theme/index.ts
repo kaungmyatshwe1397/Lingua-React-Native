@@ -18,6 +18,9 @@ export type {
   PrimaryColor,
   SemanticColor,
   NeutralColor,
+  TintColor,
+  BrandColor,
+  UnitColor,
 } from "./colors";
 export type { FontFamilyToken, FontSizeToken } from "./typography";
 export type { SpacingToken, BorderRadiusToken, ShadowToken } from "./spacing";
