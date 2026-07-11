@@ -1,4 +1,4 @@
-import { Redirect, Stack } from "expo-router";
+import { Redirect, Stack, router } from "expo-router";
 import { useAuth, useClerk, useUser } from "@clerk/clerk-expo";
 import {
   View,
@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function Index() {
   const { isSignedIn, isLoaded } = useAuth();
@@ -39,6 +40,22 @@ export default function Index() {
             {user?.emailAddresses?.[0]?.emailAddress || "user"}
           </Text>
         </Text>
+
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => router.push("/languages")}
+          className="bg-neutral-surface border border-neutral-border rounded-md py-3.5 px-6 flex-row items-center mb-4"
+        >
+          <Ionicons
+            name="language-outline"
+            size={20}
+            color="#6C4EF5"
+            style={{ marginRight: 10 }}
+          />
+          <Text className="font-semibold text-neutral-text-primary">
+            Choose language
+          </Text>
+        </TouchableOpacity>
 
         <TouchableOpacity
           activeOpacity={0.8}

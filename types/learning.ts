@@ -2,9 +2,9 @@
 
 export type LanguageCode =
   | "en"
-  | "ja"
-  | "ko"
-  | "zh"
+  | "jp"
+  | "kr"
+  | "cn"
   | "es"
   | "fr"
   | "de"
@@ -18,10 +18,12 @@ export interface Language {
   code: LanguageCode;
   name: string;
   nativeName: string;
-  flag: string; 
+  flag: string;
   difficulty: LanguageDifficulty;
   /** total number of units available */
   totalUnits: number;
+  /** display string for learner count, e.g. "28.4M learners" */
+  learnerCount: string;
 }
 
 // ─── Unit ───────────────────────────────────────────────────
