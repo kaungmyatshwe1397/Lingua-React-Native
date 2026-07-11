@@ -15,10 +15,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useSignIn } from "@clerk/clerk-expo";
 import { images } from "@/constants/images";
+import { useSocialAuth } from "@/hooks/useSocialAuth";
 
 export default function SignInScreen() {
   const router = useRouter();
-  const { isLoaded, signIn,setActive } = useSignIn();
+  const { isLoaded, signIn, setActive } = useSignIn();
+  const { handleSocialAuth } = useSocialAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -159,19 +161,31 @@ export default function SignInScreen() {
 
             {/* Social auth buttons */}
             {/* Google */}
-            <TouchableOpacity activeOpacity={0.8} className="social-btn mb-3">
-              <Ionicons name="logo-google" size={20} color="#DB4437" />
+            <TouchableOpacity
+              activeOpacity={0.4}
+              className="social-btn mb-3"
+              onPress={() => handleSocialAuth("oauth_google")}
+            >
+              <Ionicons name="logo-google" size={20} color="#191818" />
               <Text className="social-btn-text">Continue with Google</Text>
             </TouchableOpacity>
 
             {/* Facebook */}
-            <TouchableOpacity activeOpacity={0.8} className="social-btn mb-3">
+            <TouchableOpacity
+              activeOpacity={0.4}
+              className="social-btn mb-3"
+              onPress={() => handleSocialAuth("oauth_facebook")}
+            >
               <Ionicons name="logo-facebook" size={22} color="#1877F2" />
               <Text className="social-btn-text">Continue with Facebook</Text>
             </TouchableOpacity>
 
             {/* Apple */}
-            <TouchableOpacity activeOpacity={0.8} className="social-btn mb-6">
+            <TouchableOpacity
+              activeOpacity={0.4}
+              className="social-btn mb-6"
+              onPress={() => handleSocialAuth("oauth_apple")}
+            >
               <Ionicons name="logo-apple" size={24} color="#0D132B" />
               <Text className="social-btn-text">Continue with Apple</Text>
             </TouchableOpacity>
