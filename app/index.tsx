@@ -1,12 +1,12 @@
-import { Image } from "expo-image";
-import { Redirect, Stack, router } from "expo-router";
-import { useAuth, useClerk, useUser } from "@clerk/clerk-expo";
 import {
-  View,
+  ActivityIndicator,
   Text,
   TouchableOpacity,
-  ActivityIndicator,
+  View,
 } from "react-native";
+import { Redirect, router } from "expo-router";
+import { useAuth, useClerk, useUser } from "@clerk/clerk-expo";
+import { Image } from "expo-image";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "@/constants/theme";
@@ -41,7 +41,6 @@ export default function Index() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.neutral.background }}>
-      <Stack.Screen options={{ headerShown: false }} />
       <View className="flex-1 items-center justify-center px-6">
         {/* Selected language display */}
         <TouchableOpacity
@@ -77,6 +76,15 @@ export default function Index() {
             {user?.emailAddresses?.[0]?.emailAddress || "user"}
           </Text>
         </Text>
+
+        {/* Start Learning Button */}
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => router.push("/(tabs)")}
+          className="btn-cta mb-4 w-full"
+        >
+          <Text className="btn-cta-text">Start Learning</Text>
+        </TouchableOpacity>
 
         <TouchableOpacity
           activeOpacity={0.8}
