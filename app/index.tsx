@@ -9,11 +9,13 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "@/constants/theme";
+import { useLanguageStore } from "@/store/useLanguageStore";
 
 export default function Index() {
   const { isSignedIn, isLoaded } = useAuth();
   const { user } = useUser();
   const { signOut } = useClerk();
+  const { selectedLanguageCode, clearSelectedLanguage } = useLanguageStore();
 
   if (!isLoaded) {
     return (
@@ -25,6 +27,10 @@ export default function Index() {
 
   if (!isSignedIn) {
     return <Redirect href="/onboarding" />;
+  }
+
+  if (!selectedLanguageCode) {
+    return <Redirect href="/languages" />;
   }
 
   return (
@@ -61,10 +67,22 @@ export default function Index() {
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => signOut()}
-          className="bg-neutral-surface rounded-md py-3.5 px-8"
+          className="bg-neutral-surface rounded-md py-3.5 px-8 mb-4"
         >
           <Text className="font-semibold text-neutral-text-secondary">
             Sign Out
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => {
+            clearSelectedLanguage();
+          }}
+          className="bg-semantic-error/10 border border-semantic-error/30 rounded-md py-3 px-6"
+        >
+          <Text className="font-semibold text-semantic-error text-sm">
+            Clear Language Selection (Test)
           </Text>
         </TouchableOpacity>
       </View>

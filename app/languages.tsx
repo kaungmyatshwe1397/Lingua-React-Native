@@ -146,7 +146,7 @@ export default function LanguageSelectionScreen() {
         {/* Confirm button */}
         <TouchableOpacity
           activeOpacity={0.8}
-          onPress={() => router.back()}
+          onPress={() => router.replace("/")}
           disabled={!selectedLanguageCode}
           className={`btn-cta mb-4 ${
             selectedLanguageCode ? "" : "btn-cta-disabled"
