@@ -2,7 +2,7 @@ import { Language } from "@/types/learning";
 
 export const languages: Language[] = [
   {
-    code: "jp",
+    code: "ja",
     name: "Japanese",
     nativeName: "日本語",
     flag: "https://flagcdn.com/w320/jp.png",
@@ -11,7 +11,7 @@ export const languages: Language[] = [
     learnerCount: "12.7M learners",
   },
   {
-    code: "kr",
+    code: "ko",
     name: "Korean",
     nativeName: "한국어",
     flag: "https://flagcdn.com/w320/kr.png",
@@ -38,7 +38,7 @@ export const languages: Language[] = [
     learnerCount: "19.4M learners",
   },
   {
-    code: "cn",
+    code: "zh",
     name: "Chinese",
     nativeName: "中文",
     flag: "https://flagcdn.com/w320/cn.png",

@@ -31,6 +31,19 @@
   --color-neutral-border: #E5E7EB;
   --color-neutral-surface: #F6F7FB;
   --color-neutral-background: #FFFFFF;
+  --color-neutral-placeholder: #9CA3AF;
+  --color-neutral-disabled: #a78bfa;
+
+  /* Tint Colors */
+  --color-tint-gray-blue: #F0F0F5;
+  --color-tint-purple: #EDE9FE;
+  --color-tint-pink: #FFF0F0;
+  --color-tint-light-purple: #F5F3FF;
+  --color-tint-off-white: #F9FAFB;
+
+  /* Brand Colors */
+  --color-brand-google: #191818;
+  --color-brand-facebook: #1877F2;
 
   /* Font Family */
   --font-family-regular: "Poppins_400Regular";
@@ -255,7 +268,7 @@
 
 /* Disabled state for CTA */
 .btn-cta-disabled {
-  background-color: #a78bfa;
+  background-color: var(--color-neutral-disabled);
 }
 
 /* Error text */

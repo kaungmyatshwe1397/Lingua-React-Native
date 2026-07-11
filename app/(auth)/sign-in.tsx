@@ -15,6 +15,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useSignIn } from "@clerk/clerk-expo";
 import { images } from "@/constants/images";
+import { colors } from "@/constants/theme";
 import { useSocialAuth } from "@/hooks/useSocialAuth";
 
 export default function SignInScreen() {
@@ -57,7 +58,7 @@ export default function SignInScreen() {
   const canSubmit = loading || !email.trim() || !password.trim();
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.neutral.background }}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -74,7 +75,7 @@ export default function SignInScreen() {
               onPress={() => router.back()}
               className="mt-2 mb-1"
             >
-              <Ionicons name="chevron-back" size={28} color="#0D132B" />
+              <Ionicons name="chevron-back" size={28} color={colors.neutral.textPrimary} />
             </TouchableOpacity>
 
             {/* Heading */}
@@ -101,7 +102,7 @@ export default function SignInScreen() {
                 value={email}
                 onChangeText={setEmail}
                 placeholder="alex@gmail.com"
-                placeholderTextColor="#9CA3AF"
+                placeholderTextColor={colors.neutral.placeholder}
                 keyboardType="email-address"
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -117,7 +118,7 @@ export default function SignInScreen() {
                   value={password}
                   onChangeText={setPassword}
                   placeholder="••••••••"
-                  placeholderTextColor="#9CA3AF"
+                  placeholderTextColor={colors.neutral.placeholder}
                   secureTextEntry={!showPassword}
                   className="input-value"
                 />
@@ -130,7 +131,7 @@ export default function SignInScreen() {
                 <Ionicons
                   name={showPassword ? "eye-outline" : "eye-off-outline"}
                   size={22}
-                  color="#9CA3AF"
+                  color={colors.neutral.placeholder}
                 />
               </TouchableOpacity>
             </View>
@@ -146,7 +147,7 @@ export default function SignInScreen() {
               className={`btn-cta mb-6 ${canSubmit ? "btn-cta-disabled" : ""}`}
             >
               {loading ? (
-                <ActivityIndicator color="#FFFFFF" />
+                <ActivityIndicator color={colors.neutral.background} />
               ) : (
                 <Text className="btn-cta-text">Sign In</Text>
               )}
@@ -166,7 +167,7 @@ export default function SignInScreen() {
               className="social-btn mb-3"
               onPress={() => handleSocialAuth("oauth_google")}
             >
-              <Ionicons name="logo-google" size={20} color="#191818" />
+              <Ionicons name="logo-google" size={20} color={colors.brand.google} />
               <Text className="social-btn-text">Continue with Google</Text>
             </TouchableOpacity>
 
@@ -176,7 +177,7 @@ export default function SignInScreen() {
               className="social-btn mb-3"
               onPress={() => handleSocialAuth("oauth_facebook")}
             >
-              <Ionicons name="logo-facebook" size={22} color="#1877F2" />
+              <Ionicons name="logo-facebook" size={22} color={colors.brand.facebook} />
               <Text className="social-btn-text">Continue with Facebook</Text>
             </TouchableOpacity>
 
@@ -186,7 +187,7 @@ export default function SignInScreen() {
               className="social-btn mb-6"
               onPress={() => handleSocialAuth("oauth_apple")}
             >
-              <Ionicons name="logo-apple" size={24} color="#0D132B" />
+              <Ionicons name="logo-apple" size={24} color={colors.neutral.textPrimary} />
               <Text className="social-btn-text">Continue with Apple</Text>
             </TouchableOpacity>
 

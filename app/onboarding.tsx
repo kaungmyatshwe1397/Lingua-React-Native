@@ -4,12 +4,13 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { images } from "@/constants/images";
+import { colors } from "@/constants/theme";
 
 export default function OnboardingScreen() {
   const router = useRouter();
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.neutral.background }}>
       <View className="flex-1 px-6">
         {/* Logo and brand name */}
         <View className="flex-row items-center mt-2">
@@ -47,7 +48,7 @@ export default function OnboardingScreen() {
               style={{
                 top: 0,
                 left: -4,
-                backgroundColor: "#F0F0F5",
+                backgroundColor: colors.tint.grayBlue,
                 borderRadius: 12,
                 paddingHorizontal: 14,
                 paddingVertical: 8,
@@ -65,7 +66,7 @@ export default function OnboardingScreen() {
               style={{
                 top: -4,
                 right: 10,
-                backgroundColor: "#EDE9FE",
+                backgroundColor: colors.tint.purple,
                 borderRadius: 12,
                 paddingHorizontal: 14,
                 paddingVertical: 8,
@@ -83,7 +84,7 @@ export default function OnboardingScreen() {
               style={{
                 top: 80,
                 right: -4,
-                backgroundColor: "#FFF0F0",
+                backgroundColor: colors.tint.pink,
                 borderRadius: 12,
                 paddingHorizontal: 14,
                 paddingVertical: 8,
@@ -113,7 +114,7 @@ export default function OnboardingScreen() {
           <Text className="font-semibold text-lg text-white">
             Get Started
           </Text>
-          <Ionicons name="chevron-forward" size={22} color="#FFFFFF" />
+          <Ionicons name="chevron-forward" size={22} color={colors.neutral.background} />
         </TouchableOpacity>
       </View>
     </SafeAreaView>

@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import { colors } from "@/constants/theme";
 
 export default function Index() {
   const { isSignedIn, isLoaded } = useAuth();
@@ -17,7 +18,7 @@ export default function Index() {
   if (!isLoaded) {
     return (
       <View className="flex-1 items-center justify-center">
-        <ActivityIndicator size="large" color="#6C4EF5" />
+        <ActivityIndicator size="large" color={colors.primary.purple} />
       </View>
     );
   }
@@ -27,7 +28,7 @@ export default function Index() {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.neutral.background }}>
       <Stack.Screen options={{ headerShown: false }} />
       <View className="flex-1 items-center justify-center px-6">
         <Text className="text-h2 mb-2">
@@ -49,7 +50,7 @@ export default function Index() {
           <Ionicons
             name="language-outline"
             size={20}
-            color="#6C4EF5"
+            color={colors.primary.purple}
             style={{ marginRight: 10 }}
           />
           <Text className="font-semibold text-neutral-text-primary">

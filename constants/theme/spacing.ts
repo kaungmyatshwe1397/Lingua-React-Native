@@ -5,6 +5,8 @@
  * Based on a 4px base unit for clean vertical rhythm.
  */
 
+import { colors } from "./colors";
+
 export const spacing = {
   /** 0px */
   none: 0,
@@ -56,7 +58,7 @@ export const borderRadius = {
 export const shadows = {
   /** Subtle shadow for cards */
   sm: {
-    shadowColor: "#0D132B",
+    shadowColor: colors.neutral.textPrimary,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.06,
     shadowRadius: 4,
@@ -64,7 +66,7 @@ export const shadows = {
   },
   /** Medium shadow for elevated elements */
   md: {
-    shadowColor: "#0D132B",
+    shadowColor: colors.neutral.textPrimary,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
@@ -72,7 +74,7 @@ export const shadows = {
   },
   /** Large shadow for modals */
   lg: {
-    shadowColor: "#0D132B",
+    shadowColor: colors.neutral.textPrimary,
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.15,
     shadowRadius: 16,
