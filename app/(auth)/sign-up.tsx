@@ -187,19 +187,19 @@ export default function SignUpScreen() {
 
             {/* Social auth buttons */}
             {/* Google */}
-            <TouchableOpacity activeOpacity={0.8} className="social-btn mb-3">
-              <Ionicons name="logo-google" size={20} color="#DB4437" />
+            <TouchableOpacity activeOpacity={0.4} className="social-btn mb-3">
+              <Ionicons name="logo-google" size={20} color="#131212" />
               <Text className="social-btn-text">Continue with Google</Text>
             </TouchableOpacity>
 
             {/* Facebook */}
-            <TouchableOpacity activeOpacity={0.8} className="social-btn mb-3">
+            <TouchableOpacity activeOpacity={0.4} className="social-btn mb-3">
               <Ionicons name="logo-facebook" size={22} color="#1877F2" />
               <Text className="social-btn-text">Continue with Facebook</Text>
             </TouchableOpacity>
 
             {/* Apple */}
-            <TouchableOpacity activeOpacity={0.8} className="social-btn mb-6">
+            <TouchableOpacity activeOpacity={0.4} className="social-btn mb-6">
               <Ionicons name="logo-apple" size={24} color="#0D132B" />
               <Text className="social-btn-text">Continue with Apple</Text>
             </TouchableOpacity>
@@ -210,7 +210,7 @@ export default function SignUpScreen() {
                 Already have an account?{" "}
               </Text>
               <TouchableOpacity
-                activeOpacity={0.7}
+                activeOpacity={0.6}
                 onPress={() => router.push("/sign-in")}
               >
                 <Text className="link-text">Log in</Text>
