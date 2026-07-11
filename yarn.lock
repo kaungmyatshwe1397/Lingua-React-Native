@@ -2760,6 +2760,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-async-storage/async-storage@npm:2.2.0":
+  version: 2.2.0
+  resolution: "@react-native-async-storage/async-storage@npm:2.2.0"
+  dependencies:
+    merge-options: "npm:^3.0.4"
+  peerDependencies:
+    react-native: ^0.0.0-0 || >=0.65 <1.0
+  checksum: 10c0/84900eba46a40225c4ac9bf5eb58885200dc1e789d873ecda46a2a213870cc7110536ed1fd7a74b873071f3603c093958fbd84c635d6f6d4f94bfbb616ffa0ef
+  languageName: node
+  linkType: hard
+
 "@react-native-async-storage/async-storage@npm:^1.17.7":
   version: 1.24.0
   resolution: "@react-native-async-storage/async-storage@npm:1.24.0"
@@ -2768,18 +2779,6 @@ __metadata:
   peerDependencies:
     react-native: ^0.0.0-0 || >=0.60 <1.0
   checksum: 10c0/cad2098ef84251f2ab8ebc07b750e585a20ac7ca07f26e5441e957a76f2b66f01d10ef5fbddb63d675431377b31beb5208548093e1eb17d262d2184b51133f4d
-  languageName: node
-  linkType: hard
-
-"@react-native-async-storage/async-storage@npm:^3.1.1":
-  version: 3.1.1
-  resolution: "@react-native-async-storage/async-storage@npm:3.1.1"
-  dependencies:
-    idb: "npm:8.0.3"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 10c0/20d34973b0a4d1acc133556c52daa59b9826f676abdc351f12c70feb4d557b66e279d1c880662bbfe037b7d79bf64fdee759a5217781c47cd20fd8ba0e0e1b24
   languageName: node
   linkType: hard
 
@@ -6287,7 +6286,7 @@ __metadata:
     "@clerk/clerk-expo": "npm:2.19.31"
     "@expo-google-fonts/poppins": "npm:^0.4.1"
     "@expo/vector-icons": "npm:^15.0.3"
-    "@react-native-async-storage/async-storage": "npm:^3.1.1"
+    "@react-native-async-storage/async-storage": "npm:2.2.0"
     "@react-navigation/bottom-tabs": "npm:^7.4.0"
     "@react-navigation/elements": "npm:^2.6.3"
     "@react-navigation/native": "npm:^7.1.8"
@@ -7838,13 +7837,6 @@ __metadata:
   version: 6.2.1
   resolution: "idb-keyval@npm:6.2.1"
   checksum: 10c0/9f0c83703a365e00bd0b4ed6380ce509a06dedfc6ec39b2ba5740085069fd2f2ff5c14ba19356488e3612a2f9c49985971982d836460a982a5d0b4019eeba48a
-  languageName: node
-  linkType: hard
-
-"idb@npm:8.0.3":
-  version: 8.0.3
-  resolution: "idb@npm:8.0.3"
-  checksum: 10c0/421cd9a3281b7564528857031cc33fd9e95753f8191e483054cb25d1ceea7303a0d1462f4f69f5b41606f0f066156999e067478abf2460dfcf9cab80dae2a2b2
   languageName: node
   linkType: hard
 

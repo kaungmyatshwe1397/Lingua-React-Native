@@ -1,3 +1,4 @@
+import { Image } from "expo-image";
 import { Redirect, Stack, router } from "expo-router";
 import { useAuth, useClerk, useUser } from "@clerk/clerk-expo";
 import {
@@ -10,12 +11,17 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "@/constants/theme";
 import { useLanguageStore } from "@/store/useLanguageStore";
+import { getLanguageByCode } from "@/data/languages";
 
 export default function Index() {
   const { isSignedIn, isLoaded } = useAuth();
   const { user } = useUser();
   const { signOut } = useClerk();
   const { selectedLanguageCode, clearSelectedLanguage } = useLanguageStore();
+
+  const selectedLanguage = selectedLanguageCode
+    ? getLanguageByCode(selectedLanguageCode)
+    : null;
 
   if (!isLoaded) {
     return (
@@ -37,9 +43,33 @@ export default function Index() {
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.neutral.background }}>
       <Stack.Screen options={{ headerShown: false }} />
       <View className="flex-1 items-center justify-center px-6">
-        <Text className="text-h2 mb-2">
-          Welcome to Vibe-Linguo! 🎉
-        </Text>
+        {/* Selected language display */}
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => router.push("/languages")}
+          className="flex-row items-center bg-neutral-surface border border-neutral-border rounded-xl px-5 py-4 mb-3"
+        >
+          {selectedLanguage && (
+            <Image
+              source={{ uri: selectedLanguage.flag }}
+              style={{ width: 48, height: 48, borderRadius: 24 }}
+              contentFit="cover"
+            />
+          )}
+          <View className="ml-3 flex-1">
+            <Text className="text-caption text-neutral-text-secondary">
+              Learning
+            </Text>
+            <Text className="text-h3">
+              {selectedLanguage?.name || "Unknown"}
+            </Text>
+          </View>
+          <Ionicons
+            name="chevron-forward"
+            size={20}
+            color={colors.neutral.placeholder}
+          />
+        </TouchableOpacity>
 
         <Text className="text-secondary text-center mb-8">
           Signed in as{" "}
@@ -47,22 +77,6 @@ export default function Index() {
             {user?.emailAddresses?.[0]?.emailAddress || "user"}
           </Text>
         </Text>
-
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => router.push("/languages")}
-          className="bg-neutral-surface border border-neutral-border rounded-md py-3.5 px-6 flex-row items-center mb-4"
-        >
-          <Ionicons
-            name="language-outline"
-            size={20}
-            color={colors.primary.purple}
-            style={{ marginRight: 10 }}
-          />
-          <Text className="font-semibold text-neutral-text-primary">
-            Choose language
-          </Text>
-        </TouchableOpacity>
 
         <TouchableOpacity
           activeOpacity={0.8}
