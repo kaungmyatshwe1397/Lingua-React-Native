@@ -9,6 +9,12 @@ import { getLanguageByCode } from "@/data/languages";
 import { getUnitsByLanguage } from "@/data/units";
 import { colors, fontSize, fontFamily, spacing, borderRadius, shadows } from "@/constants/theme";
 
+const PLAN_TYPE_CONFIG = {
+  lesson: { color: colors.primary.blue, icon: "book" as const },
+  conversation: { color: colors.primary.purple, icon: "headset" as const },
+  words: { color: colors.unit.pink, icon: "chatbubble-ellipses" as const },
+} as const;
+
 export default function HomeScreen() {
   const { user } = useUser();
   const { selectedLanguageCode } = useLanguageStore();
@@ -110,24 +116,11 @@ export default function HomeScreen() {
               <View
                 style={[
                   styles.planIconContainer,
-                  {
-                    backgroundColor:
-                      item.type === "lesson"
-                        ? colors.primary.blue
-                        : item.type === "conversation"
-                          ? colors.primary.purple
-                          : colors.unit.pink,
-                  },
+                  { backgroundColor: PLAN_TYPE_CONFIG[item.type].color },
                 ]}
               >
                 <Ionicons
-                  name={
-                    item.type === "lesson"
-                      ? "book"
-                      : item.type === "conversation"
-                        ? "headset"
-                        : "chatbubble-ellipses"
-                  }
+                  name={PLAN_TYPE_CONFIG[item.type].icon}
                   size={20}
                   color="#fff"
                 />
