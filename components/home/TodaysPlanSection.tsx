@@ -1,6 +1,6 @@
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { colors, fontSize, fontFamily, spacing, borderRadius } from "@/constants/theme";
+import { colors } from "@/constants/theme";
 import type { TodayPlanItem } from "@/types/learning";
 
 const PLAN_TYPE_CONFIG = {
@@ -16,104 +16,39 @@ interface TodaysPlanSectionProps {
 
 export function TodaysPlanSection({ items, onToggleItem }: TodaysPlanSectionProps) {
   return (
-    <View style={styles.section}>
-      <View style={styles.header}>
-        <Text style={styles.title}>{"Today's plan"}</Text>
+    <View className="mb-6">
+      <View className="flex-row items-center justify-between mb-4">
+        <Text className="text-[20px] font-semibold text-neutral-text-primary">{"Today's plan"}</Text>
         <Pressable>
-          <Text style={styles.viewAll}>View all</Text>
+          <Text className="text-[14px] font-semibold text-primary-purple">View all</Text>
         </Pressable>
       </View>
 
       {items.map((item) => (
         <Pressable
           key={item.id}
-          style={styles.item}
+          className="flex-row items-center bg-neutral-background rounded-lg p-3 mb-2 border border-neutral-border gap-3"
           onPress={() => onToggleItem(item.id)}
         >
-          <View style={[styles.iconContainer, { backgroundColor: PLAN_TYPE_CONFIG[item.type].color }]}>
+          <View
+            className="w-11 h-11 rounded-md items-center justify-center"
+            style={{ backgroundColor: PLAN_TYPE_CONFIG[item.type].color }}
+          >
             <Ionicons name={PLAN_TYPE_CONFIG[item.type].icon} size={20} color="#fff" />
           </View>
-          <View style={styles.itemText}>
-            <Text style={styles.itemTitle}>{item.title}</Text>
-            <Text style={styles.itemSubtitle}>{item.subtitle}</Text>
+          <View className="flex-1">
+            <Text className="text-[16px] font-semibold text-neutral-text-primary">{item.title}</Text>
+            <Text className="text-[13px] font-regular text-neutral-text-secondary">{item.subtitle}</Text>
           </View>
           {item.completed ? (
-            <View style={styles.checkmark}>
+            <View className="w-7 h-7 rounded-full bg-primary-purple items-center justify-center">
               <Ionicons name="checkmark" size={16} color="#fff" />
             </View>
           ) : (
-            <View style={styles.circle} />
+            <View className="w-7 h-7 rounded-full border-2 border-neutral-border" />
           )}
         </Pressable>
       ))}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  section: {
-    marginBottom: spacing.xl,
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: spacing.base,
-  },
-  title: {
-    fontSize: fontSize.h3.size,
-    fontFamily: fontFamily.semiBold,
-    color: colors.neutral.textPrimary,
-  },
-  viewAll: {
-    fontSize: fontSize.bodyMedium.size,
-    fontFamily: fontFamily.semiBold,
-    color: colors.primary.purple,
-  },
-  item: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: colors.neutral.background,
-    borderRadius: borderRadius.lg,
-    padding: spacing.md,
-    marginBottom: spacing.sm,
-    borderWidth: 1,
-    borderColor: colors.neutral.border,
-    gap: spacing.md,
-  },
-  iconContainer: {
-    width: 44,
-    height: 44,
-    borderRadius: borderRadius.md,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  itemText: {
-    flex: 1,
-  },
-  itemTitle: {
-    fontSize: fontSize.bodyLarge.size,
-    fontFamily: fontFamily.semiBold,
-    color: colors.neutral.textPrimary,
-  },
-  itemSubtitle: {
-    fontSize: fontSize.bodySmall.size,
-    fontFamily: fontFamily.regular,
-    color: colors.neutral.textSecondary,
-  },
-  checkmark: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: colors.primary.purple,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  circle: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    borderWidth: 2,
-    borderColor: colors.neutral.border,
-  },
-});

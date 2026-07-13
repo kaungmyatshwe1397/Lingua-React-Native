@@ -1,71 +1,21 @@
-import { View, Text, Image, Pressable, StyleSheet } from "react-native";
+import { View, Text, Image, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { remoteImages } from "@/constants/images";
-import { colors, fontSize, fontFamily, spacing, borderRadius } from "@/constants/theme";
 
 export function NextUpCard() {
   return (
-    <View style={styles.card}>
-      <View style={styles.content}>
-        <Text style={styles.label}>Next up</Text>
-        <Text style={styles.title}>AI Video Call</Text>
-        <Text style={styles.subtitle}>Practice speaking</Text>
+    <View className="flex-row items-center justify-between bg-tint-light-purple rounded-lg p-4 mb-8">
+      <View className="flex-1">
+        <Text className="text-[13px] font-medium text-neutral-text-secondary mb-1">Next up</Text>
+        <Text className="text-[20px] font-bold text-neutral-text-primary mb-1">AI Video Call</Text>
+        <Text className="text-[13px] font-regular text-neutral-text-secondary">Practice speaking</Text>
       </View>
-      <View style={styles.right}>
-        <Image source={{ uri: remoteImages.aiTeacherAvatar }} style={styles.avatar} />
-        <Pressable style={styles.callButton}>
+      <View className="items-center gap-2">
+        <Image source={{ uri: remoteImages.aiTeacherAvatar }} className="w-14 h-14 rounded-full" />
+        <Pressable className="w-10 h-10 rounded-full bg-primary-green items-center justify-center">
           <Ionicons name="videocam" size={20} color="#fff" />
         </Pressable>
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  card: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: colors.tint.lightPurple,
-    borderRadius: borderRadius.lg,
-    padding: spacing.base,
-    marginBottom: spacing.xxl,
-  },
-  content: {
-    flex: 1,
-  },
-  label: {
-    fontSize: fontSize.bodySmall.size,
-    fontFamily: fontFamily.medium,
-    color: colors.neutral.textSecondary,
-    marginBottom: spacing.xs,
-  },
-  title: {
-    fontSize: fontSize.h3.size,
-    fontFamily: fontFamily.bold,
-    color: colors.neutral.textPrimary,
-    marginBottom: spacing.xs,
-  },
-  subtitle: {
-    fontSize: fontSize.bodySmall.size,
-    fontFamily: fontFamily.regular,
-    color: colors.neutral.textSecondary,
-  },
-  right: {
-    alignItems: "center",
-    gap: spacing.sm,
-  },
-  avatar: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-  },
-  callButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: colors.primary.green,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

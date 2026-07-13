@@ -1,6 +1,6 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image } from "react-native";
 import { images } from "@/constants/images";
-import { colors, fontSize, fontFamily, spacing, borderRadius, shadows } from "@/constants/theme";
+import { shadows } from "@/constants/theme";
 
 interface DailyGoalCardProps {
   dailyXP: number;
@@ -11,72 +11,18 @@ export function DailyGoalCard({ dailyXP, dailyGoal }: DailyGoalCardProps) {
   const progressPercent = Math.min((dailyXP / dailyGoal) * 100, 100);
 
   return (
-    <View style={styles.card}>
-      <View style={styles.content}>
-        <Text style={styles.label}>Daily goal</Text>
-        <View style={styles.xpRow}>
-          <Text style={styles.currentXP}>{dailyXP}</Text>
-          <Text style={styles.separator}> / {dailyGoal} XP</Text>
+    <View className="flex-row items-center justify-between bg-neutral-surface rounded-lg p-4 mb-4" style={shadows.sm}>
+      <View className="flex-1">
+        <Text className="text-[14px] font-medium text-neutral-text-secondary mb-1">Daily goal</Text>
+        <View className="flex-row items-baseline mb-2">
+          <Text className="text-[28px] font-bold text-neutral-text-primary">{dailyXP}</Text>
+          <Text className="text-[14px] font-regular text-neutral-text-secondary"> / {dailyGoal} XP</Text>
         </View>
-        <View style={styles.progressTrack}>
-          <View style={[styles.progressFill, { width: `${progressPercent}%` }]} />
+        <View className="h-2 bg-neutral-border rounded-full overflow-hidden w-[80%]">
+          <View className="h-full bg-semantic-streak rounded-full" style={{ width: `${progressPercent}%` }} />
         </View>
       </View>
-      <Image source={images.treasure} style={styles.treasureImage} />
+      <Image source={images.treasure} className="w-[72px] h-[72px]" style={{ resizeMode: "contain" }} />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  card: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: colors.neutral.surface,
-    borderRadius: borderRadius.lg,
-    padding: spacing.base,
-    marginBottom: spacing.base,
-    ...shadows.sm,
-  },
-  content: {
-    flex: 1,
-  },
-  label: {
-    fontSize: fontSize.bodyMedium.size,
-    fontFamily: fontFamily.medium,
-    color: colors.neutral.textSecondary,
-    marginBottom: spacing.xs,
-  },
-  xpRow: {
-    flexDirection: "row",
-    alignItems: "baseline",
-    marginBottom: spacing.sm,
-  },
-  currentXP: {
-    fontSize: 28,
-    fontFamily: fontFamily.bold,
-    color: colors.neutral.textPrimary,
-  },
-  separator: {
-    fontSize: fontSize.bodyMedium.size,
-    fontFamily: fontFamily.regular,
-    color: colors.neutral.textSecondary,
-  },
-  progressTrack: {
-    height: 8,
-    backgroundColor: colors.neutral.border,
-    borderRadius: borderRadius.full,
-    overflow: "hidden",
-    width: "80%",
-  },
-  progressFill: {
-    height: "100%",
-    backgroundColor: colors.semantic.streak,
-    borderRadius: borderRadius.full,
-  },
-  treasureImage: {
-    width: 72,
-    height: 72,
-    resizeMode: "contain",
-  },
-});

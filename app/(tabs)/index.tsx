@@ -1,11 +1,11 @@
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useUser } from "@clerk/clerk-expo";
 import { useLanguageStore } from "@/store/useLanguageStore";
 import { useProgressStore } from "@/store/useProgressStore";
 import { getLanguageByCode } from "@/data/languages";
 import { getUnitsByLanguage } from "@/data/units";
-import { colors, spacing } from "@/constants/theme";
+import { colors } from "@/constants/theme";
 import { HeaderSection } from "@/components/home/HeaderSection";
 import { DailyGoalCard } from "@/components/home/DailyGoalCard";
 import { ContinueLearningCard } from "@/components/home/ContinueLearningCard";
@@ -25,10 +25,10 @@ export default function HomeScreen() {
   const flagUrl = selectedLanguage?.flag;
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.neutral.background }}>
       <ScrollView
-        style={styles.scrollView}
-        contentContainerStyle={styles.scrollContent}
+        className="flex-1"
+        contentContainerClassName="px-4 pb-8"
         showsVerticalScrollIndicator={false}
       >
         <HeaderSection firstName={firstName} flagUrl={flagUrl} streak={streak} languageCode={selectedLanguageCode ?? undefined} />
@@ -43,17 +43,3 @@ export default function HomeScreen() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: colors.neutral.background,
-  },
-  scrollView: {
-    flex: 1,
-  },
-  scrollContent: {
-    paddingHorizontal: spacing.base,
-    paddingBottom: spacing.xxl,
-  },
-});

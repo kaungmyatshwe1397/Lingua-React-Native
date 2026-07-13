@@ -1,4 +1,4 @@
-import { View, Pressable, StyleSheet, Text } from "react-native";
+import { View, Pressable, Text, StyleSheet } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -35,10 +35,16 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   }));
 
   return (
-    <View style={[styles.container, { paddingBottom: insets.bottom + 8 }]}>
-      <View style={[styles.floatingBar, { width: TOTAL_WIDTH }]}>
+    <View className="items-center" style={{ paddingBottom: insets.bottom + 8 }}>
+      <View
+        className="flex-row items-center justify-between bg-neutral-background rounded-[28px] border border-neutral-border pt-2 pb-2 px-3"
+        style={[floatingBarShadow, { width: TOTAL_WIDTH }]}
+      >
         {/* Animated active indicator */}
-        <Animated.View style={[styles.activeIndicator, animatedIndicatorStyle]} />
+        <Animated.View
+          className="absolute w-[52px] h-10 rounded-[20px] bg-tint-purple top-2 left-3"
+          style={animatedIndicatorStyle}
+        />
 
         {state.routes.map((route, index) => {
           const { options } = descriptors[route.key];
@@ -66,7 +72,7 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
               key={route.key}
               onPress={onPress}
               onLongPress={onLongPress}
-              style={styles.tabItem}
+              className="w-[52px] items-center justify-center z-[1] gap-0.5"
             >
               {Icon && (
                 <Icon
@@ -76,10 +82,8 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
                 />
               )}
               <Text
-                style={[
-                  styles.tabLabel,
-                  { color: isFocused ? colors.primary.purple : colors.neutral.placeholder },
-                ]}
+                className="text-[9px] font-[600] tracking-[0.2px]"
+                style={{ color: isFocused ? colors.primary.purple : colors.neutral.placeholder }}
                 numberOfLines={1}
               >
                 {typeof options.tabBarLabel === "string"
@@ -94,47 +98,12 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-  },
-  floatingBar: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: colors.neutral.background,
-    borderRadius: 28,
-    borderWidth: 1,
-    borderColor: colors.neutral.border,
-    paddingTop: 8,
-    paddingBottom: 8,
-    paddingHorizontal: 12,
-    // Floating shadow
+const floatingBarShadow = StyleSheet.create({
+  shadow: {
     shadowColor: colors.neutral.textPrimary,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
     shadowRadius: 12,
     elevation: 6,
   },
-  activeIndicator: {
-    position: "absolute",
-    width: 52,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: colors.tint.purple,
-    top: 8,
-    left: 12,
-  },
-  tabItem: {
-    width: 52,
-    alignItems: "center",
-    justifyContent: "center",
-    zIndex: 1,
-    gap: 2,
-  },
-  tabLabel: {
-    fontSize: 9,
-    fontWeight: "600",
-    letterSpacing: 0.2,
-  },
-});
+}).shadow;

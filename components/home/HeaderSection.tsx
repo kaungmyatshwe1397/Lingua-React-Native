@@ -1,7 +1,7 @@
-import { View, Text, Image, Pressable, StyleSheet } from "react-native";
+import { View, Text, Image, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { remoteImages } from "@/constants/images";
-import { colors, fontSize, fontFamily, spacing } from "@/constants/theme";
+import { colors } from "@/constants/theme";
 import type { LanguageCode } from "@/types/learning";
 
 const greetings: Record<LanguageCode, string> = {
@@ -28,69 +28,23 @@ export function HeaderSection({ firstName, flagUrl, streak, languageCode }: Head
   const greeting = languageCode ? greetings[languageCode] : "Hola";
 
   return (
-    <View style={styles.header}>
-      <View style={styles.headerLeft}>
+    <View className="flex-row items-center justify-between pt-3 pb-4">
+      <View className="flex-row items-center gap-2">
         <Image
           source={flagUrl ? { uri: flagUrl } : { uri: remoteImages.spanishFlag }}
-          style={styles.flagIcon}
+          className="w-8 h-8 rounded-full"
         />
-        <Text style={styles.greeting}>{greeting}, {firstName}! 👋</Text>
+        <Text className="text-[20px] font-bold text-neutral-text-primary">{greeting}, {firstName}! 👋</Text>
       </View>
-      <View style={styles.headerRight}>
-        <View style={styles.streakBadge}>
-          <Text style={styles.streakEmoji}>🔥</Text>
-          <Text style={styles.streakCount}>{streak}</Text>
+      <View className="flex-row items-center gap-3">
+        <View className="flex-row items-center gap-1">
+          <Text className="text-[20px]">🔥</Text>
+          <Text className="text-[16px] font-bold text-semantic-streak">{streak}</Text>
         </View>
-        <Pressable style={styles.bellButton}>
+        <Pressable className="p-1">
           <Ionicons name="notifications-outline" size={24} color={colors.neutral.textPrimary} />
         </Pressable>
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingTop: spacing.md,
-    paddingBottom: spacing.base,
-  },
-  headerLeft: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: spacing.sm,
-  },
-  flagIcon: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-  },
-  greeting: {
-    fontSize: fontSize.h3.size,
-    fontFamily: fontFamily.bold,
-    color: colors.neutral.textPrimary,
-  },
-  headerRight: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: spacing.md,
-  },
-  streakBadge: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: spacing.xs,
-  },
-  streakEmoji: {
-    fontSize: 20,
-  },
-  streakCount: {
-    fontSize: fontSize.bodyLarge.size,
-    fontFamily: fontFamily.bold,
-    color: colors.semantic.streak,
-  },
-  bellButton: {
-    padding: spacing.xs,
-  },
-});
