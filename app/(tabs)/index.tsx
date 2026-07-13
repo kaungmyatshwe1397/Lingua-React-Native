@@ -26,8 +26,6 @@ export default function HomeScreen() {
   const currentUnit = units.length > 0 ? units[units.length - 1] : null;
   const currentUnitNumber = currentUnit?.order ?? 1;
 
-  const progressPercent = Math.min((dailyXP / dailyGoal) * 100, 100);
-
   const firstName = user?.firstName ?? "Learner";
   const flagUrl = selectedLanguage?.flag;
 
@@ -70,7 +68,7 @@ export default function HomeScreen() {
               <View
                 style={[
                   styles.progressFill,
-                  { width: `${progressPercent}%` },
+                  { width: `${Math.min((dailyXP / dailyGoal) * 100, 100)}%` },
                 ]}
               />
             </View>

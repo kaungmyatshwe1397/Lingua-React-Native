@@ -1,27 +1,14 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-export interface TodayPlanItem {
-  id: string;
-  type: "lesson" | "conversation" | "words";
-  title: string;
-  subtitle: string;
-  completed: boolean;
-}
+import type { TodayPlanItem } from "@/types/learning";
 
 interface ProgressState {
-  /** Daily XP earned today */
   dailyXP: number;
-  /** Daily XP goal target */
   dailyGoal: number;
-  /** Current streak count */
   streak: number;
-  /** IDs of completed lesson IDs */
   completedLessonIds: string[];
-  /** Today's plan items */
   todayPlan: TodayPlanItem[];
-  /** ID of the current lesson being continued */
   currentLessonId: string | null;
 
   // Actions

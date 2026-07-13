@@ -1,3 +1,15 @@
+// ─── Plan ──────────────────────────────────────────────────
+
+export type PlanItemType = "lesson" | "conversation" | "words";
+
+export interface TodayPlanItem {
+  id: string;
+  type: PlanItemType;
+  title: string;
+  subtitle: string;
+  completed: boolean;
+}
+
 // ─── Language ───────────────────────────────────────────────
 
 export type LanguageCode =
