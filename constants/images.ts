@@ -22,3 +22,14 @@ export const images = {
   palace,
   treasure,
 } as const;
+
+/**
+ * Remote image URLs for assets not yet in the bundle.
+ * Use these when a local asset is not available.
+ */
+export const remoteImages = {
+  /** AI teacher avatar placeholder */
+  aiTeacherAvatar: "https://i.pravatar.cc/150?img=47",
+  /** Spanish flag */
+  spanishFlag: "https://flagcdn.com/w320/es.png",
+} as const;

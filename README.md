@@ -84,7 +84,7 @@ yarn web
 
 ## Features
 
-- **Onboarding** -- Welcome screen with mascot illustration and speech bubbles
+- **Onboarding** -- Welcome screen with mascot illustration and speech  bubbles
 - **Authentication** -- Email/password sign-up and sign-in with Clerk
 - **Email Verification** -- 6-digit code verification modal with auto-submit
 - **Social Auth** -- OAuth sign-in via Google, Facebook, and Apple
