@@ -41,13 +41,10 @@ export default function HomeScreen() {
         {/* ── Header ──────────────────────────────────────── */}
         <View style={styles.header}>
           <View style={styles.headerLeft}>
-            {flagUrl ? (
-              <Image source={{ uri: flagUrl }} style={styles.flagIcon} />
-            ) : (
-              <View style={[styles.flagIcon, styles.flagPlaceholder]}>
-                <Text style={styles.flagPlaceholderText}>🌐</Text>
-              </View>
-            )}
+            <Image
+              source={flagUrl ? { uri: flagUrl } : { uri: "https://flagcdn.com/w320/un.png" }}
+              style={styles.flagIcon}
+            />
             <Text style={styles.greeting}>Hola, {firstName}! 👋</Text>
           </View>
           <View style={styles.headerRight}>
@@ -192,14 +189,6 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-  },
-  flagPlaceholder: {
-    backgroundColor: colors.tint.grayBlue,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  flagPlaceholderText: {
-    fontSize: 18,
   },
   greeting: {
     fontSize: fontSize.h3.size,
