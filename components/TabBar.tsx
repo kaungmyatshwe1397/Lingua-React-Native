@@ -1,4 +1,4 @@
-import { View, Pressable, StyleSheet } from "react-native";
+import { View, Pressable, StyleSheet, Text } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -75,6 +75,17 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
                   size={ICON_SIZE}
                 />
               )}
+              <Text
+                style={[
+                  styles.tabLabel,
+                  { color: isFocused ? colors.primary.purple : colors.neutral.placeholder },
+                ]}
+                numberOfLines={1}
+              >
+                {typeof options.tabBarLabel === "string"
+                  ? options.tabBarLabel
+                  : options.title ?? route.name}
+              </Text>
             </Pressable>
           );
         })}
@@ -95,8 +106,8 @@ const styles = StyleSheet.create({
     borderRadius: 28,
     borderWidth: 1,
     borderColor: colors.neutral.border,
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingTop: 8,
+    paddingBottom: 8,
     paddingHorizontal: 12,
     // Floating shadow
     shadowColor: colors.neutral.textPrimary,
@@ -108,17 +119,22 @@ const styles = StyleSheet.create({
   activeIndicator: {
     position: "absolute",
     width: 52,
-    height: 32,
-    borderRadius: 16,
+    height: 40,
+    borderRadius: 20,
     backgroundColor: colors.tint.purple,
-    top: 10,
+    top: 8,
     left: 12,
   },
   tabItem: {
     width: 52,
-    height: 32,
     alignItems: "center",
     justifyContent: "center",
     zIndex: 1,
+    gap: 2,
+  },
+  tabLabel: {
+    fontSize: 9,
+    fontWeight: "600",
+    letterSpacing: 0.2,
   },
 });
