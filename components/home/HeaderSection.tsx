@@ -2,14 +2,31 @@ import { View, Text, Image, Pressable, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { remoteImages } from "@/constants/images";
 import { colors, fontSize, fontFamily, spacing } from "@/constants/theme";
+import type { LanguageCode } from "@/types/learning";
+
+const greetings: Record<LanguageCode, string> = {
+  ja: "こんにちは",
+  ko: "안녕하세요",
+  es: "Hola",
+  fr: "Bonjour",
+  zh: "你好",
+  de: "Hallo",
+  en: "Hello",
+  it: "Ciao",
+  pt: "Olá",
+  th: "สวัสดี",
+};
 
 interface HeaderSectionProps {
   firstName: string;
   flagUrl?: string;
   streak: number;
+  languageCode?: LanguageCode;
 }
 
-export function HeaderSection({ firstName, flagUrl, streak }: HeaderSectionProps) {
+export function HeaderSection({ firstName, flagUrl, streak, languageCode }: HeaderSectionProps) {
+  const greeting = languageCode ? greetings[languageCode] : "Hola";
+
   return (
     <View style={styles.header}>
       <View style={styles.headerLeft}>
@@ -17,7 +34,7 @@ export function HeaderSection({ firstName, flagUrl, streak }: HeaderSectionProps
           source={flagUrl ? { uri: flagUrl } : { uri: remoteImages.spanishFlag }}
           style={styles.flagIcon}
         />
-        <Text style={styles.greeting}>Hola, {firstName}! 👋</Text>
+        <Text style={styles.greeting}>{greeting}, {firstName}! 👋</Text>
       </View>
       <View style={styles.headerRight}>
         <View style={styles.streakBadge}>

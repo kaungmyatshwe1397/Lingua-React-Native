@@ -31,7 +31,7 @@ export default function HomeScreen() {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <HeaderSection firstName={firstName} flagUrl={flagUrl} streak={streak} />
+        <HeaderSection firstName={firstName} flagUrl={flagUrl} streak={streak} languageCode={selectedLanguageCode ?? undefined} />
         <DailyGoalCard dailyXP={dailyXP} dailyGoal={dailyGoal} />
         <ContinueLearningCard
           languageName={selectedLanguage?.name ?? "Spanish"}
