@@ -49,6 +49,13 @@ export default function RootLayout() {
           name="(tabs)"
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="lessons/[unitId]"
+          options={{
+            headerShown: false,
+            animation: "slide_from_right",
+          }}
+        />
       </Stack>
     </ClerkProvider>
   );
