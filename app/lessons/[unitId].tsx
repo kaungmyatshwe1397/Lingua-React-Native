@@ -16,7 +16,7 @@ export default function LessonsScreen() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<TabType>("lessons");
 
-  const { completedLessonIds, currentLessonId } = useProgressStore();
+  const { completedLessonIds } = useProgressStore();
 
   const unit = getUnitById(unitId ?? "");
 
@@ -45,12 +45,17 @@ export default function LessonsScreen() {
     (lesson) => lesson && completedLessonIds.includes(lesson.id)
   ).length;
 
+  // Derive in-progress: first incomplete lesson in this unit
+  const inProgressLessonId = unitLessons.find(
+    (lesson) => lesson && !completedLessonIds.includes(lesson.id)
+  )?.id;
+
   // Get lesson status
   const getLessonStatus = (lessonId: string) => {
     if (completedLessonIds.includes(lessonId)) {
       return "completed";
     }
-    if (currentLessonId === lessonId) {
+    if (lessonId === inProgressLessonId) {
       return "in-progress";
     }
     return "locked";
